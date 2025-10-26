@@ -96,24 +96,37 @@ flowchart LR
   end
 
   subgraph Services
-    MQ[Async Jobs (Email/Webhooks)]
+    MQ["Async Jobs (Email/Webhooks)"]
     Cache[(Redis Cache)]
   end
 
   subgraph Data
     DB[(PostgreSQL)]
-    GW[(Stripe/PayPal)]
+    GW["Stripe/PayPal"]
   end
 
-  UI --> A & P & S & B & Pay & R
+  UI --> A
+  UI --> P
+  UI --> S
+  UI --> B
+  UI --> Pay
+  UI --> R
+
   A --> DB
   P --> DB
   S --> DB
   B --> DB
   R --> DB
+
   Pay --> GW
   Pay --> MQ
-  A & P & S & B & R --> Cache
+
+  A --> Cache
+  P --> Cache
+  S --> Cache
+  B --> Cache
+  R --> Cache
+
 ```
 
 
